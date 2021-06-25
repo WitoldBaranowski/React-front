@@ -18,6 +18,9 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
   },
+  button3: {
+    margin: theme.spacing.unit,
+  },
   leftIcon: {
     marginRight: theme.spacing.unit,
   },
@@ -43,7 +46,7 @@ export default class Comments extends Component {
       },
       body: JSON.stringify({
         username:this.props.usernam.usernam.usernam,
-        comment: this.state.username
+        comment: this.state.comment
       })
     };
     const response = await fetch('https://doggysapp.herokuapp.com/comment', requestOptions);
@@ -58,7 +61,7 @@ export default class Comments extends Component {
       'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        comment: this.state.username
+        comment: this.state.comment
       })
     };
     const response = await fetch('https://doggysapp.herokuapp.com/comment', requestOptions);
@@ -81,20 +84,39 @@ export default class Comments extends Component {
     this.setState(data);
   }
 
+  async updatecom(e){
+    e.preventDefault();
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username:this.props.usernam.usernam.usernam,
+        comment: this.state.comment
+      })
+    };
+    const response = await fetch('https://doggysapp.herokuapp.com/comment/change', requestOptions);
+    const data = await response.json();
+    this.setState(data);
+  }
+
+
 
    constructor(props) {
     super(props);
     this.state={data:[]}
     this.comms1();
     this.state = {
-      username : ''
+      comment : ''
     }
     
     this.updateInput = this.updateInput.bind(this);
   }  
 
   updateInput(event){
-    this.setState({username : event.target.value})
+    this.setState({comment : event.target.value})
     }
 
   render() {
@@ -122,6 +144,11 @@ export default class Comments extends Component {
       this.commdel(e);
    }} >
               Cofnij
+            </Button></span> 
+            <span>&ensp;<Button variant="contained" color="green" className={styles.button3} onClick={(e) => {
+      this.updatecom(e);
+   }} >
+              Zmień
             </Button></span>
           
           </Grid>
